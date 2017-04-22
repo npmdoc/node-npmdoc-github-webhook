@@ -1,0 +1,148 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/rvagg/github-webhook#readme">github-webhook (v1.1.3)</a>
+</h1>
+<h4>A flexible web server for reacting GitHub Webhooks</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.github-webhook">module github-webhook</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.github-webhook.github-webhook">
+            function <span class="apidocSignatureSpan"></span>github-webhook
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.github-webhook" id="apidoc.module.github-webhook">module github-webhook</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.github-webhook.github-webhook" id="apidoc.element.github-webhook.github-webhook">
+        function <span class="apidocSignatureSpan"></span>github-webhook
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function createServer(options) {
+  if (options.port === undefined)
+    throw new TypeError('must provide a \'port\' option')
+
+  if (!Array.isArray(options.rules))
+    options.rules = []
+
+  var server    = http.createServer()
+    , handler   = createHandler(options)
+    , logStream = options.log &amp;&amp; fs.createWriteStream(options.log)
+
+  server.webhookHandler = handler
+
+  server.on('request', function (req, res) {
+    serverDebug('Connection from '
+        + req.socket.address().address
+        + ':'
+        + req.socket.address().port
+    )
+
+    handler(req, res, function (err) {
+      function response (code, msg) {
+
+        var address = req.socket.address()
+        serverDebug('Response to %s:%s: %d "%s"'
+            , address ? address.address : 'unknown'
+            , address ? address.port : '??'
+            , code
+            , msg
+        )
+
+        res.writeHead(code, { 'content-type': 'text/json' })
+        res.end(JSON.stringify({ error: msg }))
+      }
+
+      if (err)
+        return response(500, 'Internal server error: ' + err.message)
+
+      response(404, 'Resource not found on this server')
+    })
+  })
+
+  handler.on('error', function (err) {
+    eventsDebug('Non-fatal error: ' + JSON.stringify(err.message))
+  })
+
+  eventKeys.forEach(function (key) {
+    handler.on(key, function (event) {
+      eventsDebug(JSON.stringify(event))
+      handleRules(logStream, options.rules, event)
+    })
+  })
+
+  return server
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
