@@ -1,6 +1,6 @@
 # npmdoc-github-webhook
 
-#### api documentation for  [github-webhook (v1.1.3)](https://github.com/rvagg/github-webhook#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-github-webhook.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-github-webhook) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-github-webhook.svg)](https://travis-ci.org/npmdoc/node-npmdoc-github-webhook)
+#### basic api documentation for  [github-webhook (v1.1.3)](https://github.com/rvagg/github-webhook#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-github-webhook.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-github-webhook) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-github-webhook.svg)](https://travis-ci.org/npmdoc/node-npmdoc-github-webhook)
 
 #### A flexible web server for reacting GitHub Webhooks
 
